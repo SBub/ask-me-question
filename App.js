@@ -181,6 +181,7 @@ const styles = StyleSheet.create({
   },
   inputProgress: {
     width: '85%',
+    alignItems: 'center',
   },
   section: {
     position: 'absolute',

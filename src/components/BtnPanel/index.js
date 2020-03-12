@@ -33,23 +33,6 @@ const useAnimateHeight = () => {
     }
   }, [showBtnContainer, animatedValue]);
 
-  useEffect(() => {
-    let keyboardShowListener = Keyboard.addListener('keyboardDidShow', () => {
-      setShowBtnContainer(false);
-    });
-    return () => {
-      keyboardShowListener.remove();
-    };
-  }, []);
-  useEffect(() => {
-    let keyboardHideListener = Keyboard.addListener('keyboardDidHide', () => {
-      setShowBtnContainer(true);
-    });
-    return () => {
-      keyboardHideListener.remove();
-    };
-  }, []);
-
   return {animatedValue, showBtnContainer};
 };
 
