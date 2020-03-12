@@ -10,7 +10,6 @@ import React, {useState, useEffect, useCallback, useRef} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
-  View,
   Keyboard,
   InteractionManager,
   useWindowDimensions,
@@ -120,9 +119,11 @@ const Main = () => {
   }, [code, dispatchToError, dispatchToQuestion, showQuestion]);
 
   const startOver = () => {
-    dispatchToQuestion({type: SET_QUESTION, payload: {}});
-    setAnswerSubmitted(false);
     showInput();
+    InteractionManager.runAfterInteractions(() => {
+      dispatchToQuestion({type: SET_QUESTION, payload: {}});
+      setAnswerSubmitted(false);
+    });
   };
 
   const resetInput = () => {
@@ -185,6 +186,8 @@ const styles = StyleSheet.create({
   },
   section: {
     position: 'absolute',
+    alignItems: 'center',
+    width: '90%',
   },
 });
 

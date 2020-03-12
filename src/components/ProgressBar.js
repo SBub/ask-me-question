@@ -4,6 +4,8 @@ import {View, StyleSheet, Animated} from 'react-native';
 
 import {LIGHTER_PURPLE} from 'utils/colors';
 
+import InnerShadow from './Shadow/Inner';
+
 const ProgressBar = () => {
   const animatedWidth = useRef(new Animated.Value(0)).current;
   const width = animatedWidth.interpolate({
@@ -19,28 +21,33 @@ const ProgressBar = () => {
   }, [animatedWidth]);
 
   return (
-    <View style={styles.progressBar}>
-      <Animated.View
-        style={
-          ([StyleSheet.absoluteFill],
-          {backgroundColor: LIGHTER_PURPLE, width, borderRadius: 20})
-        }
-      />
-    </View>
+    <InnerShadow
+      customStyle={{...styles.inherit, marginTop: 20}}
+      source={require('assets/input_bg.png')}>
+      <View style={[styles.inherit, styles.progressBar, {width: '100%'}]}>
+        <Animated.View
+          style={
+            ([StyleSheet.absoluteFill],
+            {backgroundColor: LIGHTER_PURPLE, width, borderRadius: 20})
+          }
+        />
+      </View>
+    </InnerShadow>
   );
 };
 
 const styles = StyleSheet.create({
-  progressBar: {
+  inherit: {
     height: 23,
     width: '90%',
+    borderRadius: 20,
+  },
+  progressBar: {
     borderColor: '#d3d3d3',
     borderWidth: 1,
-    borderRadius: 20,
     flexDirection: 'row',
     paddingHorizontal: 4,
     paddingVertical: 4,
-    marginTop: 20,
   },
 });
 

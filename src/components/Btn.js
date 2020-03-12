@@ -7,18 +7,21 @@ import {
 } from 'react-native';
 
 import {LIGHTER_PURPLE} from 'utils/colors';
+import OuterShadow from './Shadow/Outer';
 
 const Btn = ({onSubmit, disabled, title}) => {
   const {width} = useWindowDimensions();
   return (
-    <TouchableOpacity
-      onPress={onSubmit}
-      style={[styles.btn, {width: width * 0.85}]}
-      disabled={disabled}>
-      <Text style={[styles.btnText, disabled && styles.btnDisabled]}>
-        {title}
-      </Text>
-    </TouchableOpacity>
+    <OuterShadow>
+      <TouchableOpacity
+        onPress={onSubmit}
+        style={[styles.btn, {width: width * 0.85}]}
+        disabled={disabled}>
+        <Text style={[styles.btnText, disabled && styles.btnDisabled]}>
+          {title}
+        </Text>
+      </TouchableOpacity>
+    </OuterShadow>
   );
 };
 
@@ -27,6 +30,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: LIGHTER_PURPLE,
     alignItems: 'center',
+    elevation: 5,
   },
   btnText: {
     paddingVertical: 16,
