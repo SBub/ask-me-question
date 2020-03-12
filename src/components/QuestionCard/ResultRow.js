@@ -3,7 +3,7 @@ import {View, Text, StyleSheet} from 'react-native';
 
 import {STEEL, LIGHT_BLUE_GREY} from 'utils/colors';
 
-const ResultRow = ({answer, value = 0}) => {
+const ResultRow = ({answer, value}) => {
   return (
     <View style={styles.container} key={answer}>
       <Text style={styles.resultLabel}>{answer.toUpperCase()}</Text>
@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 8,
+    alignItems: 'center',
   },
   resultLabel: {
     fontSize: 17,
