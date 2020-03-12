@@ -1,49 +1,72 @@
-import React, {useState} from 'react';
+import React, {useState, useCallback} from 'react';
 import {View, Text, StyleSheet, ActivityIndicator} from 'react-native';
 
 import OptionBtn from './OptionBtn';
 import ResultRow from './ResultRow';
 
+import API from 'utils/server';
+import {
+  SET_QUESTION,
+  useQuestionDispatch,
+  useQuestionState,
+} from 'context/QuestionProvider';
+import {useErrorDispatch, SET_ERROR} from 'context/ErrorProvider';
+
 import {LIGHT_BLUE_GREY, CORNFLOWER_BLUE, SAN_JUAN} from 'utils/colors';
 
-const state = {
-  question: 'Hey, what is the weather like?',
-  answers: {
-    Yes: 0,
-    No: 0,
-  },
-};
-
-const QuestionCard = ({answerSubmitted = false}) => {
+const QuestionCard = ({answerSubmitted, onSubmitAnswer}) => {
   const [submitting, setSubmitting] = useState(false);
+
+  const questionState = useQuestionState();
+  const dispatchToQuestion = useQuestionDispatch();
+  const dispatchToError = useErrorDispatch();
+
+  const submitAnswer = useCallback(
+    async option => {
+      setSubmitting(true);
+      try {
+        const res = await API.submitAnswer(questionState.id, option);
+        dispatchToQuestion({type: SET_QUESTION, payload: res});
+        onSubmitAnswer(true);
+      } catch (err) {
+        dispatchToError({type: SET_ERROR, payload: err});
+      } finally {
+        setSubmitting(false);
+      }
+    },
+    [questionState.id, dispatchToQuestion, dispatchToError, onSubmitAnswer],
+  );
+
   return (
     <View style={styles.cardContainer}>
       <Text style={styles.label}>
         {answerSubmitted ? 'Final results for: ' : 'The question is:'}
       </Text>
-      <Text style={styles.questionText}>{state.question}</Text>
+      <Text style={styles.questionText}>{questionState.question}</Text>
       {submitting ? (
-        <ActivityIndicator />
+        <View style={{height: 70}}>
+          <ActivityIndicator />
+        </View>
       ) : !answerSubmitted ? (
         <View style={styles.btnGroup}>
-          {state.answers &&
-            Object.keys(state.answers).map((answer, idx) => (
+          {questionState.answers &&
+            Object.keys(questionState.answers).map((answer, idx) => (
               <OptionBtn
                 key={answer}
                 idx={idx}
                 label={answer}
-                onSubmit={() => {}}
+                onSubmit={() => submitAnswer(answer)}
               />
             ))}
         </View>
       ) : (
-        <View>
-          {state.answers &&
-            Object.keys(state.answers).map((answer, idx) => (
+        <View style={styles.resultsContainer}>
+          {questionState.answers &&
+            Object.keys(questionState.answers).map(answer => (
               <ResultRow
                 key={answer}
                 answer={answer}
-                value={state.answers[answer]}
+                value={questionState.answers[answer]}
               />
             ))}
         </View>
@@ -54,27 +77,31 @@ const QuestionCard = ({answerSubmitted = false}) => {
 
 const styles = StyleSheet.create({
   cardContainer: {
+    height: '45%',
     width: '98%',
     borderRadius: 24,
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     backgroundColor: LIGHT_BLUE_GREY,
     paddingHorizontal: 24,
     paddingVertical: 24,
   },
   label: {
     color: CORNFLOWER_BLUE,
-    marginBottom: 27,
     fontSize: 21,
     fontWeight: '400',
   },
   questionText: {
     fontSize: 29,
     color: SAN_JUAN,
-    marginBottom: 70,
   },
   btnGroup: {
+    height: 70,
     flexDirection: 'row',
     alignSelf: 'center',
+  },
+  resultsContainer: {
+    height: 70,
+    width: '100%',
   },
 });
 

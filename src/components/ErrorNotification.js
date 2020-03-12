@@ -6,6 +6,7 @@ import {
   useWindowDimensions,
   StyleSheet,
   NativeModules,
+  Platform,
 } from 'react-native';
 
 import {LIGHTISH_PURPLE} from 'utils/colors';
@@ -17,14 +18,22 @@ const ErrorNotification = () => {
   const {width} = useWindowDimensions();
 
   useEffect(() => {
-    StatusBarManager.getHeight(({height}) => {
-      setStatusBarHeight(height);
-    });
+    if (Platform.OS === 'ios') {
+      StatusBarManager.getHeight(({height}) => {
+        setStatusBarHeight(height);
+      });
+    } else {
+      setStatusBarHeight(StatusBarManager.HEIGHT);
+    }
   }, []);
 
   return (
     <View
-      style={{...styles.errorContainer, width, paddingTop: statusBarHeight}}>
+      style={{
+        ...styles.errorContainer,
+        width,
+        paddingVertical: statusBarHeight,
+      }}>
       <Text style={styles.errText}>The ID you provided is incorrect</Text>
       <Text style={styles.errText}>Please provide a valid room ID</Text>
     </View>
