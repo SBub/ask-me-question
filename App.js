@@ -6,13 +6,15 @@
  * @flow
  */
 
-import React, {useState, useEffect, useCallback} from 'react';
+import React, {useState, useEffect, useCallback, useRef} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
   View,
   Keyboard,
   InteractionManager,
+  useWindowDimensions,
+  Animated,
 } from 'react-native';
 
 import Input from 'components/Input';
@@ -39,6 +41,41 @@ import ErrorProvider, {
 
 import {LIGHT_BLUE_GREY} from 'src/utils/colors';
 
+const useAnimations = () => {
+  const {height} = useWindowDimensions();
+
+  const animatedInput = useRef(new Animated.Value(height / 3)).current;
+  const animatedQuestion = useRef(new Animated.Value(-400)).current;
+
+  const showQuestion = () => {
+    Animated.sequence([
+      Animated.timing(animatedInput, {
+        toValue: height,
+        duration: 500,
+      }),
+      Animated.timing(animatedQuestion, {
+        toValue: height / 6,
+        duration: 500,
+      }),
+    ]).start();
+  };
+
+  const showInput = () => {
+    Animated.sequence([
+      Animated.timing(animatedQuestion, {
+        toValue: -400,
+        duration: 500,
+      }),
+      Animated.timing(animatedInput, {
+        toValue: height / 3,
+        duration: 500,
+      }),
+    ]).start();
+  };
+
+  return {animatedInput, animatedQuestion, showInput, showQuestion};
+};
+
 const Main = () => {
   const [code, setCode] = useState('');
   const [submitting, setSubmitting] = useState(false);
@@ -49,6 +86,13 @@ const Main = () => {
   const error = useErrorState();
   const dispatchToError = useErrorDispatch();
   const dispatchToQuestion = useQuestionDispatch();
+
+  const {
+    animatedInput,
+    animatedQuestion,
+    showInput,
+    showQuestion,
+  } = useAnimations();
 
   useEffect(() => {
     if (code.length === 4) {
@@ -65,6 +109,7 @@ const Main = () => {
       InteractionManager.runAfterInteractions(() => {
         dispatchToQuestion({type: SET_QUESTION, payload: res});
         setCode('');
+        showQuestion();
       });
     } catch (err) {
       dispatchToError({type: SET_ERROR, payload: err});
@@ -72,11 +117,12 @@ const Main = () => {
       setSubmitting(false);
       setShowProgressBar(false);
     }
-  }, [code, dispatchToError, dispatchToQuestion]);
+  }, [code, dispatchToError, dispatchToQuestion, showQuestion]);
 
   const startOver = () => {
     dispatchToQuestion({type: SET_QUESTION, payload: {}});
     setAnswerSubmitted(false);
+    showInput();
   };
 
   const resetInput = () => {
@@ -86,14 +132,17 @@ const Main = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.inputProgress}>
+      <Animated.View
+        style={[styles.inputProgress, styles.section, {top: animatedInput}]}>
         <Input code={code} onChange={setCode} onReset={resetInput} />
         {showProgressBar && <ProgressBar />}
-      </View>
-      <QuestionCard
-        answerSubmitted={answerSubmitted}
-        onSubmitAnswer={setAnswerSubmitted}
-      />
+      </Animated.View>
+      <Animated.View style={[styles.section, {top: animatedQuestion}]}>
+        <QuestionCard
+          answerSubmitted={answerSubmitted}
+          onSubmitAnswer={setAnswerSubmitted}
+        />
+      </Animated.View>
       <BtnPanel>
         {question.id ? (
           <Btn onSubmit={startOver} title="Start Over" />
@@ -132,6 +181,10 @@ const styles = StyleSheet.create({
   },
   inputProgress: {
     width: '85%',
+    alignItems: 'center',
+  },
+  section: {
+    position: 'absolute',
   },
 });
 

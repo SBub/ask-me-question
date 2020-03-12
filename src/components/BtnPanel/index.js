@@ -1,14 +1,52 @@
-import React, {useState} from 'react';
-import {View, StyleSheet, useWindowDimensions} from 'react-native';
+import React, {useState, useEffect, useRef} from 'react';
+import {
+  StyleSheet,
+  useWindowDimensions,
+  Animated,
+  Keyboard,
+} from 'react-native';
 
 import {LIGHTISH_PURPLE} from 'utils/colors';
 
-const BtnPanel = ({children}) => {
+const useAnimateHeight = () => {
   const [showBtnContainer, setShowBtnContainer] = useState(true);
+  const animatedValue = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.spring(animatedValue, {
+      toValue: 118,
+      duration: 500,
+    }).start();
+  }, [animatedValue]);
+
+  useEffect(() => {
+    if (showBtnContainer) {
+      Animated.spring(animatedValue, {
+        toValue: 118,
+        duration: 1000,
+      }).start();
+    } else {
+      Animated.timing(animatedValue, {
+        toValue: 0,
+        duration: 1000,
+      }).start();
+    }
+  }, [showBtnContainer, animatedValue]);
+
+  return {animatedValue, showBtnContainer};
+};
+
+const BtnPanel = ({children}) => {
+  const {animatedValue, showBtnContainer} = useAnimateHeight();
   const {width} = useWindowDimensions();
 
   if (!showBtnContainer) return null;
-  return <View style={{...styles.buttonContainer, width}}>{children}</View>;
+  return (
+    <Animated.View
+      style={[{...styles.buttonContainer, width}, {height: animatedValue}]}>
+      {children}
+    </Animated.View>
+  );
 };
 
 const styles = StyleSheet.create({

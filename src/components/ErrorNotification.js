@@ -1,12 +1,12 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 
 import {
-  View,
   Text,
   useWindowDimensions,
   StyleSheet,
   NativeModules,
   Platform,
+  Animated,
 } from 'react-native';
 
 import {LIGHTISH_PURPLE} from 'utils/colors';
@@ -15,6 +15,7 @@ const {StatusBarManager} = NativeModules;
 
 const ErrorNotification = () => {
   const [statusBarHeight, setStatusBarHeight] = useState(0);
+  const animatedTop = useRef(new Animated.Value(-150)).current;
   const {width} = useWindowDimensions();
 
   useEffect(() => {
@@ -27,16 +28,25 @@ const ErrorNotification = () => {
     }
   }, []);
 
+  useEffect(() => {
+    Animated.spring(animatedTop, {
+      toValue: 0,
+    }).start();
+  }, [animatedTop]);
+
   return (
-    <View
-      style={{
-        ...styles.errorContainer,
-        width,
-        paddingVertical: statusBarHeight,
-      }}>
+    <Animated.View
+      style={[
+        {
+          ...styles.errorContainer,
+          width,
+          paddingVertical: statusBarHeight,
+        },
+        {top: animatedTop},
+      ]}>
       <Text style={styles.errText}>The ID you provided is incorrect</Text>
       <Text style={styles.errText}>Please provide a valid room ID</Text>
-    </View>
+    </Animated.View>
   );
 };
 
@@ -44,7 +54,6 @@ const styles = StyleSheet.create({
   errorContainer: {
     position: 'absolute',
     top: 0,
-    height: 90,
     backgroundColor: LIGHTISH_PURPLE,
     alignItems: 'center',
     justifyContent: 'center',
