@@ -6,3 +6,4 @@ export const STEEL = '#7b8499';
 export const PALE_GREY = '#eff5fa';
 export const SAN_JUAN = '#31456a';
 export const BLUE_BAYOUX = '#82A3C4';
+export const LINK_WATER = '#e4eef7';

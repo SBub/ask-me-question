@@ -97,16 +97,7 @@ const styles = StyleSheet.create({
     },
   },
   right: {
-    ...Platform.select({
-      android: {
-        // right: -5,
-        right: -11,
-        // opacity: 0.5,
-      },
-      ios: {
-        right: -11,
-      },
-    }),
+    right: -11,
 
     shadowOffset: {
       width: -4,
@@ -114,16 +105,7 @@ const styles = StyleSheet.create({
     },
   },
   bottom: {
-    ...Platform.select({
-      android: {
-        bottom: -11,
-        // bottom: -5,
-        // opacity: 0.5,
-      },
-      ios: {
-        bottom: -11,
-      },
-    }),
+    bottom: -11,
 
     shadowOffset: {
       width: 0,
