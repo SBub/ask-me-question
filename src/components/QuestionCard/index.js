@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
   questionText: {
     fontSize: 29,
     color: SAN_JUAN,
-    marginBottom: 70,
+    marginBottom: 40,
   },
   btnGroup: {
     flexDirection: 'row',
