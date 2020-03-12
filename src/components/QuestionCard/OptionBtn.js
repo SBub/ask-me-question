@@ -20,13 +20,6 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     paddingHorizontal: 50,
     paddingVertical: 12,
-    shadowColor: 'white',
-    shadowOffset: {
-      width: -8,
-      height: -8,
-    },
-    shadowOpacity: 0.8,
-    shadowRadius: 8,
     backgroundColor: LIGHT_BLUE_GREY,
   },
   left: {marginRight: 8},

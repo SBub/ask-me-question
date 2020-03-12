@@ -77,7 +77,6 @@ const QuestionCard = ({answerSubmitted, onSubmitAnswer}) => {
 
 const styles = StyleSheet.create({
   cardContainer: {
-    height: '45%',
     width: '98%',
     borderRadius: 24,
     justifyContent: 'space-between',
@@ -89,10 +88,12 @@ const styles = StyleSheet.create({
     color: CORNFLOWER_BLUE,
     fontSize: 21,
     fontWeight: '400',
+    marginBottom: 27,
   },
   questionText: {
     fontSize: 29,
     color: SAN_JUAN,
+    marginBottom: 70,
   },
   btnGroup: {
     height: 70,
