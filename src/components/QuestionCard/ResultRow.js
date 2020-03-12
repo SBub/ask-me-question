@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 5,
     justifyContent: 'center',
+    alignItems: 'center',
   },
   resultNumber: {
     color: STEEL,

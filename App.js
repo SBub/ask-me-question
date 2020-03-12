@@ -186,6 +186,8 @@ const styles = StyleSheet.create({
   },
   section: {
     position: 'absolute',
+    alignItems: 'center',
+    width: '90%',
   },
 });
 

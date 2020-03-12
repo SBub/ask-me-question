@@ -9,7 +9,6 @@ import {
 import {LIGHTISH_PURPLE} from 'utils/colors';
 
 const useAnimateHeight = () => {
-  const [showBtnContainer, setShowBtnContainer] = useState(true);
   const animatedValue = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -19,28 +18,13 @@ const useAnimateHeight = () => {
     }).start();
   }, [animatedValue]);
 
-  useEffect(() => {
-    if (showBtnContainer) {
-      Animated.spring(animatedValue, {
-        toValue: 118,
-        duration: 1000,
-      }).start();
-    } else {
-      Animated.timing(animatedValue, {
-        toValue: 0,
-        duration: 1000,
-      }).start();
-    }
-  }, [showBtnContainer, animatedValue]);
-
-  return {animatedValue, showBtnContainer};
+  return {animatedValue};
 };
 
 const BtnPanel = ({children}) => {
-  const {animatedValue, showBtnContainer} = useAnimateHeight();
+  const {animatedValue} = useAnimateHeight();
   const {width} = useWindowDimensions();
 
-  if (!showBtnContainer) return null;
   return (
     <Animated.View
       style={[{...styles.buttonContainer, width}, {height: animatedValue}]}>
