@@ -1,15 +1,20 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 
-import {STEEL, LIGHT_BLUE_GREY} from 'utils/colors';
+import {STEEL} from 'utils/colors';
+import InnerShadow from '../Shadow/Inner';
 
 const ResultRow = ({answer, value}) => {
   return (
     <View style={styles.container} key={answer}>
       <Text style={styles.resultLabel}>{answer.toUpperCase()}</Text>
-      <View style={styles.resultNumberContainer}>
-        <Text style={styles.resultNumber}>{value}</Text>
-      </View>
+      <InnerShadow
+        customStyle={{borderRadius: 8}}
+        source={require('assets/result_bg.png')}>
+        <View style={styles.resultNumberContainer}>
+          <Text style={styles.resultNumber}>{value}</Text>
+        </View>
+      </InnerShadow>
     </View>
   );
 };
@@ -27,10 +32,11 @@ const styles = StyleSheet.create({
     color: STEEL,
   },
   resultNumberContainer: {
+    width: '100%',
     borderRadius: 8,
     paddingHorizontal: 20,
     paddingVertical: 5,
-    backgroundColor: LIGHT_BLUE_GREY,
+    justifyContent: 'center',
   },
   resultNumber: {
     color: STEEL,
