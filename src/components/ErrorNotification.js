@@ -12,6 +12,8 @@ import {LIGHTISH_PURPLE} from 'utils/colors';
 
 const {StatusBarManager} = NativeModules;
 
+// can be expanded in functionality like switching between server responses
+// and dislaying corresponding message
 const ErrorNotification = () => {
   const [statusBarHeight, setStatusBarHeight] = useState(0);
   const animatedTop = useRef(new Animated.Value(-150)).current;
