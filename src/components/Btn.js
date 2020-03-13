@@ -28,7 +28,7 @@ const Btn = ({onSubmit, disabled, title}) => {
 
 Btn.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-  disabled: PropTypes.boolean.isRequired,
+  disabled: PropTypes.bool.isRequired,
   title: PropTypes.string.isRequired,
 };
 

@@ -13,7 +13,7 @@ const OuterShadow = ({children}) => {
 };
 
 OuterShadow.propTypes = {
-  children: PropTypes.elementType.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 const styles = StyleSheet.create({

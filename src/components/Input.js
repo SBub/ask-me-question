@@ -1,4 +1,5 @@
 import React, {useState, useLayoutEffect} from 'react';
+import PropTypes from 'prop-types';
 import {TextInput, StyleSheet, Keyboard} from 'react-native';
 import InnerShadow from './Shadow/Inner';
 
@@ -39,6 +40,12 @@ const Input = React.memo(({code, onChange, onReset}) => {
     </InnerShadow>
   );
 });
+
+Input.propTypes = {
+  code: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  onChange: PropTypes.func.isRequired,
+  onReset: PropTypes.func.isRequired,
+};
 
 const styles = StyleSheet.create({
   inherit: {

@@ -146,7 +146,7 @@ const Main = () => {
       </Animated.View>
       <BtnPanel>
         {question.id ? (
-          <Btn onSubmit={startOver} title="Start Over" />
+          <Btn onSubmit={startOver} disabled={false} title="Start Over" />
         ) : (
           <Btn
             onSubmit={handleSubmit}
