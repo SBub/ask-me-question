@@ -44,6 +44,7 @@ const useAnimations = () => {
   const {height} = useWindowDimensions();
 
   const animatedInput = useRef(new Animated.Value(height / 3)).current;
+  // moving question behind the screen
   const animatedQuestion = useRef(new Animated.Value(-400)).current;
 
   const showQuestion = () => {
@@ -105,10 +106,11 @@ const Main = () => {
     setSubmitting(true);
     try {
       const res = await API.fetchRoom(code);
+      dispatchToQuestion({type: SET_QUESTION, payload: res});
+      showQuestion();
+      // wait for animation to transit to question finish
       InteractionManager.runAfterInteractions(() => {
-        dispatchToQuestion({type: SET_QUESTION, payload: res});
         setCode('');
-        showQuestion();
       });
     } catch (err) {
       dispatchToError({type: SET_ERROR, payload: err});
@@ -120,12 +122,14 @@ const Main = () => {
 
   const startOver = () => {
     showInput();
+    // waiting for animation to transit to input finish
     InteractionManager.runAfterInteractions(() => {
       dispatchToQuestion({type: SET_QUESTION, payload: {}});
       setAnswerSubmitted(false);
     });
   };
 
+  // as soon as user focuses the input field
   const resetInput = useCallback(() => {
     dispatchToError({type: DISMISS_ERROR});
     setCode('');
