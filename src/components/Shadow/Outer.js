@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {View, StyleSheet, Platform} from 'react-native';
 
 const OuterShadow = ({children}) => {
@@ -9,6 +10,10 @@ const OuterShadow = ({children}) => {
   ) : (
     children
   );
+};
+
+OuterShadow.propTypes = {
+  children: PropTypes.elementType.isRequired,
 };
 
 const styles = StyleSheet.create({

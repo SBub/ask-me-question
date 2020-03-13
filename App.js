@@ -126,10 +126,10 @@ const Main = () => {
     });
   };
 
-  const resetInput = () => {
+  const resetInput = useCallback(() => {
     dispatchToError({type: DISMISS_ERROR});
     setCode('');
-  };
+  }, [dispatchToError]);
 
   return (
     <SafeAreaView style={styles.container}>

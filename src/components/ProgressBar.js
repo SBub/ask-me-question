@@ -1,5 +1,4 @@
 import React, {useRef, useEffect} from 'react';
-
 import {View, StyleSheet, Animated} from 'react-native';
 
 import {LIGHTER_PURPLE} from 'utils/colors';

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {View, StyleSheet, Platform, ImageBackground} from 'react-native';
 
 import {BLUE_BAYOUX} from 'utils/colors';
@@ -53,6 +54,14 @@ const InnerShadow = ({children, customStyle, source}) => {
       )}
     </View>
   );
+};
+
+InnerShadow.propTypes = {
+  children: PropTypes.elementType,
+  customStyle: {
+    borderRadius: PropTypes.number.isRequired,
+  },
+  source: PropTypes.string.isRequired,
 };
 
 const styles = StyleSheet.create({

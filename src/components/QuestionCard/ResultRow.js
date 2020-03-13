@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {View, Text, StyleSheet} from 'react-native';
 
 import {STEEL} from 'utils/colors';
@@ -17,6 +18,11 @@ const ResultRow = ({answer, value}) => {
       </InnerShadow>
     </View>
   );
+};
+
+ResultRow.propTypes = {
+  answer: PropTypes.string.isRequired,
+  value: PropTypes.number.isRequired,
 };
 
 const styles = StyleSheet.create({

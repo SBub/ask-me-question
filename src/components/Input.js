@@ -4,7 +4,7 @@ import InnerShadow from './Shadow/Inner';
 
 import {LINK_WATER, CORNFLOWER_BLUE} from 'utils/colors';
 
-const Input = ({code, onChange, onReset}) => {
+const Input = React.memo(({code, onChange, onReset}) => {
   const [focused, setIsFocused] = useState(false);
 
   const handleFocus = () => {
@@ -38,7 +38,7 @@ const Input = ({code, onChange, onReset}) => {
       />
     </InnerShadow>
   );
-};
+});
 
 const styles = StyleSheet.create({
   inherit: {

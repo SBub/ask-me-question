@@ -1,5 +1,6 @@
 import React from 'react';
-import {View, TouchableOpacity, Text, StyleSheet} from 'react-native';
+import PropTypes from 'prop-types';
+import {TouchableOpacity, Text, StyleSheet} from 'react-native';
 
 import {LIGHT_BLUE_GREY, CORNFLOWER_BLUE} from 'utils/colors';
 
@@ -15,6 +16,12 @@ const OptionBtn = ({label, onSubmit, idx}) => {
       </TouchableOpacity>
     </OuterShadow>
   );
+};
+
+OptionBtn.propTypes = {
+  label: PropTypes.string.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  idx: PropTypes.number.isRequired,
 };
 
 const styles = StyleSheet.create({

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   TouchableOpacity,
   StyleSheet,
@@ -23,6 +24,12 @@ const Btn = ({onSubmit, disabled, title}) => {
       </TouchableOpacity>
     </OuterShadow>
   );
+};
+
+Btn.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  disabled: PropTypes.boolean.isRequired,
+  title: PropTypes.string.isRequired,
 };
 
 const styles = StyleSheet.create({

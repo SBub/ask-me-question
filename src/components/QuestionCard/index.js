@@ -1,4 +1,5 @@
 import React, {useState, useCallback} from 'react';
+import PropTypes from 'prop-types';
 import {
   View,
   Text,
@@ -23,7 +24,7 @@ import {useErrorDispatch, SET_ERROR} from 'context/ErrorProvider';
 import {LIGHT_BLUE_GREY, CORNFLOWER_BLUE, SAN_JUAN} from 'utils/colors';
 import OuterShadow from '../Shadow/Outer';
 
-const QuestionCard = ({answerSubmitted, onSubmitAnswer}) => {
+const QuestionCard = React.memo(({answerSubmitted, onSubmitAnswer}) => {
   const [submitting, setSubmitting] = useState(false);
 
   const questionState = useQuestionState();
@@ -84,6 +85,11 @@ const QuestionCard = ({answerSubmitted, onSubmitAnswer}) => {
       </View>
     </OuterShadow>
   );
+});
+
+QuestionCard.propTypes = {
+  answerSubmitted: PropTypes.boolean.isRequired,
+  onSubmitAnswer: PropTypes.func.isRequired,
 };
 
 const styles = StyleSheet.create({

@@ -1,10 +1,6 @@
-import React, {useState, useEffect, useRef} from 'react';
-import {
-  StyleSheet,
-  useWindowDimensions,
-  Animated,
-  Keyboard,
-} from 'react-native';
+import React, {useEffect, useRef} from 'react';
+import PropTypes from 'prop-types';
+import {StyleSheet, useWindowDimensions, Animated} from 'react-native';
 
 import {LIGHTISH_PURPLE} from 'utils/colors';
 
@@ -31,6 +27,10 @@ const BtnPanel = ({children}) => {
       {children}
     </Animated.View>
   );
+};
+
+BtnPanel.propTypes = {
+  children: PropTypes.elementType,
 };
 
 const styles = StyleSheet.create({
