@@ -19,7 +19,11 @@ import {
   useQuestionDispatch,
   useQuestionState,
 } from 'context/QuestionProvider';
-import {useErrorDispatch, SET_ERROR} from 'context/ErrorProvider';
+import {
+  useErrorDispatch,
+  useErrorState,
+  SET_ERROR,
+} from 'context/ErrorProvider';
 
 import {LIGHT_BLUE_GREY, CORNFLOWER_BLUE, SAN_JUAN} from 'utils/colors';
 import OuterShadow from '../Shadow/Outer';
@@ -27,6 +31,7 @@ import OuterShadow from '../Shadow/Outer';
 const QuestionCard = React.memo(({answerSubmitted, onSubmitAnswer}) => {
   const [submitting, setSubmitting] = useState(false);
 
+  const error = useErrorState();
   const questionState = useQuestionState();
   const dispatchToQuestion = useQuestionDispatch();
   const dispatchToError = useErrorDispatch();
@@ -72,7 +77,8 @@ const QuestionCard = React.memo(({answerSubmitted, onSubmitAnswer}) => {
           </View>
         ) : (
           <View style={styles.resultsContainer}>
-            {questionState.answers &&
+            {!error &&
+              questionState.answers &&
               Object.keys(questionState.answers).map(answer => (
                 <ResultRow
                   key={answer}
@@ -88,7 +94,7 @@ const QuestionCard = React.memo(({answerSubmitted, onSubmitAnswer}) => {
 });
 
 QuestionCard.propTypes = {
-  answerSubmitted: PropTypes.boolean.isRequired,
+  answerSubmitted: PropTypes.bool.isRequired,
   onSubmitAnswer: PropTypes.func.isRequired,
 };
 

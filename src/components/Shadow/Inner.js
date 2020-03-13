@@ -57,11 +57,11 @@ const InnerShadow = ({children, customStyle, source}) => {
 };
 
 InnerShadow.propTypes = {
-  children: PropTypes.elementType,
-  customStyle: {
+  children: PropTypes.node.isRequired,
+  customStyle: PropTypes.shape({
     borderRadius: PropTypes.number.isRequired,
-  },
-  source: PropTypes.string.isRequired,
+  }).isRequired,
+  source: PropTypes.number.isRequired,
 };
 
 const styles = StyleSheet.create({

@@ -30,7 +30,7 @@ const BtnPanel = ({children}) => {
 };
 
 BtnPanel.propTypes = {
-  children: PropTypes.elementType,
+  children: PropTypes.node.isRequired,
 };
 
 const styles = StyleSheet.create({
